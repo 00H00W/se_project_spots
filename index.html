@@ -109,6 +109,37 @@
             </li>
           </ul>
         </section>
+        <section class="modal modal_opened">
+          <div class="modal__container">
+            <div class="modal__header-container">
+              <h2 class="modal__header-text">Edit Profile</h2>
+              <button class="modal__exit-button" type="button"></button>
+            </div>
+            <form class="modal__form">
+              <label for="input-name" class="modal__label">Name</label>
+              <input
+                id="input-name"
+                type="text"
+                class="modal__input"
+                required
+                placeholder="Profile Name"
+              />
+              <label for="input-dscription" class="modal__label">
+                Description
+              </label>
+              <input
+                id="input-dscription"
+                type="text"
+                class="modal__input"
+                required
+                placeholder="Profile Description"
+              />
+              <button type="submit" class="modal__save-button">
+                <span class="modal__save-text">Save</span>
+              </button>
+            </form>
+          </div>
+        </section>
       </main>
       <footer class="footer">
         <p class="footer__text">2023 © Spots</p>

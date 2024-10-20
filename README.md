@@ -17,3 +17,4 @@ This project was built to demonstrate responsive design using flex boxes, grids,
 This webpage is deployed to GitHub Pages
 
 - [Deployment Link](https://00h00w.github.io/se_project_spots/)
+- [Overview Video](https://drive.google.com/file/d/14EU8-qA4hgADDe8oylNyDngp1qfvAP4U/view?usp=sharing)

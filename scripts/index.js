@@ -24,3 +24,14 @@ const initialCards = [
     link: "https://unsplash.com/photos/a-white-building-with-a-blue-sky-y023qB37LVc",
   },
 ];
+
+const profileEditButton = document.querySelector(".profile__edit-button");
+const modalExitButton = document.querySelector(".modal__exit-button");
+const modal = document.querySelector("#edit-profile-modal");
+
+profileEditButton.addEventListener("click", function () {
+  modal.classList.add("modal_opened");
+});
+modalExitButton.addEventListener("click", function () {
+  modal.classList.remove("modal_opened");
+});

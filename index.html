@@ -20,6 +20,7 @@
         />
       </header>
       <main class="content">
+        <!-- Profile -->
         <section class="profile page__section">
           <img
             src="./images/content/avatar.jpg"
@@ -39,9 +40,23 @@
             <span class="profile__add-text">New Post</span>
           </button>
         </section>
+        <!-- Cards -->
         <section class="cards page__section">
           <ul class="cards__list">
-            <li class="card">
+            <template id="card-template">
+              <li class="card">
+                <img
+                  src="./images/content/1-photo-by-moritz-feldmann-from-pexels.jpg"
+                  alt="Val Thorens"
+                  class="card__image"
+                />
+                <div class="card__content">
+                  <h2 class="card__title">Val Thorens</h2>
+                  <button type="button" class="card__like-button"></button>
+                </div>
+              </li>
+            </template>
+            <!-- <li class="card">
               <img
                 src="./images/content/1-photo-by-moritz-feldmann-from-pexels.jpg"
                 alt="Val Thorens"
@@ -106,9 +121,10 @@
                 <h2 class="card__title">Mountain house</h2>
                 <button type="button" class="card__like-button"></button>
               </div>
-            </li>
+            </li> -->
           </ul>
         </section>
+        <!-- Edit Profile Modal -->
         <section id="edit-profile-modal" class="modal">
           <div class="modal__container">
             <div class="modal__header-container">
@@ -124,11 +140,11 @@
                 required
                 placeholder="Profile Name"
               />
-              <label for="input-dscription" class="modal__label">
+              <label for="input-description" class="modal__label">
                 Description
               </label>
               <input
-                id="input-dscription"
+                id="input-description"
                 type="text"
                 class="modal__input"
                 required

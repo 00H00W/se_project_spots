@@ -1,37 +1,76 @@
 const initialCards = [
   {
     name: "Angkor Thom, Cambodia",
-    link: "https://unsplash.com/photos/a-long-hallway-with-stone-walls-and-pillars-HVDSaAoyou4",
+    link: "../images/content/place-images/AngkorThomCambodia.jpg",
   },
   {
     name: "Petra, Jordan",
-    link: "https://unsplash.com/photos/brown-concrete-building-during-daytime-V_JINc1uYXY",
+    link: "../images/content/place-images/PetraJordan.jpg",
   },
   {
     name: "Machu Picchu, Peru",
-    link: "https://unsplash.com/photos/a-city-in-the-mountains-lyoFZoZNx0c",
+    link: "../images/content/place-images/MachuPicchuPeru.jpg",
   },
   {
     name: "Giza, Egypt",
-    link: "https://unsplash.com/photos/pyramid-of-giza-Nsi6jZ9tRZo",
+    link: "../images/content/place-images/GizaEgypt.jpg",
   },
   {
     name: "Chichén Itzá, Mexico",
-    link: "https://unsplash.com/photos/a-very-tall-pyramid-with-a-clock-on-its-side-o3IOpem3bwA",
+    link: "../images/content/place-images/ChichenItzaMexico.jpg",
   },
   {
     name: "Taj Mahal, India",
-    link: "https://unsplash.com/photos/a-white-building-with-a-blue-sky-y023qB37LVc",
+    link: "../images/content/place-images/TajMahalIndia.jpg",
   },
 ];
+
+const cardList = document.querySelector(".cards__list");
+initialCards.forEach((cardData) => {
+  cardList.append(getCardElement(cardData));
+});
 
 const profileEditButton = document.querySelector(".profile__edit-button");
 const modalExitButton = document.querySelector(".modal__exit-button");
 const modal = document.querySelector("#edit-profile-modal");
 
+const profileName = document.querySelector(".profile__name");
+const profileDesc = document.querySelector(".profile__description");
+
+const modalForm = document.querySelector(".modal__form");
+const modalNameInput = document.querySelector("#input-name");
+const modalDescInput = document.querySelector("#input-description");
+
 profileEditButton.addEventListener("click", function () {
   modal.classList.add("modal_opened");
+  modalNameInput.value = profileName.textContent;
+  modalDescInput.value = profileDesc.textContent;
 });
-modalExitButton.addEventListener("click", function () {
+modalExitButton.addEventListener("click", closeModal());
+modalForm.addEventListener("submit", function (evt) {
+  evt.preventDefault();
+
+  profileName.textContent = modalNameInput.value;
+  profileDesc.textContent = modalDescInput.value;
+
+  closeModal();
+});
+
+function closeModal() {
   modal.classList.remove("modal_opened");
-});
+}
+
+function getCardElement(data) {
+  // Create Card From Template
+  let cardTemplate = document.querySelector("#card-template").content;
+  let cardElement = cardTemplate.querySelector(".card").cloneNode(true);
+
+  let cardTitle = cardElement.querySelector(".card__title");
+  let cardImage = cardElement.querySelector(".card__image");
+
+  cardTitle.textContent = data.name;
+  cardImage.src = data.link;
+  cardImage.alt = data.name;
+
+  return cardElement;
+}

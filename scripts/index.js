@@ -1,27 +1,27 @@
 const initialCards = [
   {
     name: "Angkor Thom, Cambodia",
-    link: "../images/content/place-images/AngkorThomCambodia.jpg",
+    link: "./images/content/place-images/AngkorThomCambodia.jpg",
   },
   {
     name: "Petra, Jordan",
-    link: "../images/content/place-images/PetraJordan.jpg",
+    link: "./images/content/place-images/PetraJordan.jpg",
   },
   {
     name: "Machu Picchu, Peru",
-    link: "../images/content/place-images/MachuPicchuPeru.jpg",
+    link: "./images/content/place-images/MachuPicchuPeru.jpg",
   },
   {
     name: "Giza, Egypt",
-    link: "../images/content/place-images/GizaEgypt.jpg",
+    link: "./images/content/place-images/GizaEgypt.jpg",
   },
   {
     name: "Chichén Itzá, Mexico",
-    link: "../images/content/place-images/ChichenItzaMexico.jpg",
+    link: "./images/content/place-images/ChichenItzaMexico.jpg",
   },
   {
     name: "Taj Mahal, India",
-    link: "../images/content/place-images/TajMahalIndia.jpg",
+    link: "./images/content/place-images/TajMahalIndia.jpg",
   },
 ];
 

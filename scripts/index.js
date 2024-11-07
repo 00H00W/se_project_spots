@@ -25,6 +25,7 @@ const initialCards = [
   },
 ];
 
+const cardTemplate = document.querySelector("#card-template").content;
 const cardList = document.querySelector(".cards__list");
 initialCards.forEach((cardData) => {
   cardList.append(getCardElement(cardData));
@@ -62,12 +63,13 @@ function closeModal() {
 
 function getCardElement(data) {
   // Create Card From Template
-  let cardTemplate = document.querySelector("#card-template").content;
   let cardElement = cardTemplate.querySelector(".card").cloneNode(true);
 
+  // Get card elements
   let cardTitle = cardElement.querySelector(".card__title");
   let cardImage = cardElement.querySelector(".card__image");
 
+  // Assign card data
   cardTitle.textContent = data.name;
   cardImage.src = data.link;
   cardImage.alt = data.name;

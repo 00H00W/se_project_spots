@@ -47,10 +47,14 @@
   background-image: url(../images/components/exit-button.svg);
   background-position: center;
   background-size: cover;
+  background-color: white;
   border: none;
   opacity: 40%;
   padding: 0;
   cursor: pointer;
+}
+.modal__exit-button:hover {
+  opacity: 1;
 }
 
 .modal__form {

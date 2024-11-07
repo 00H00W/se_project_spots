@@ -46,7 +46,7 @@ profileEditButton.addEventListener("click", function () {
   modalNameInput.value = profileName.textContent;
   modalDescInput.value = profileDesc.textContent;
 });
-modalExitButton.addEventListener("click", closeModal());
+modalExitButton.addEventListener("click", closeModal);
 modalForm.addEventListener("submit", function (evt) {
   evt.preventDefault();
 

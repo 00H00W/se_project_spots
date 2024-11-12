@@ -103,10 +103,15 @@ function getCardElement(cardData) {
   cardImage.alt = cardData.name;
 
   // Setup buttons
-  cardElement
+  cardElement // like button
     .querySelector(".card__like-button")
     .addEventListener("click", (evt) => {
       evt.currentTarget.classList.toggle("card__like-button_liked");
+    });
+  cardElement // delete button
+    .querySelector(".card__delete-button")
+    .addEventListener("click", (evt) => {
+      cardElement.remove();
     });
 
   return cardElement;

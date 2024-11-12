@@ -33,6 +33,7 @@
   flex-direction: column;
   width: auto;
   max-width: 80vw;
+  max-height: 80vh;
 }
 
 .modal__image {

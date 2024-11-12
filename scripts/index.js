@@ -31,33 +31,48 @@ initialCards.forEach((cardData) => {
   cardList.append(getCardElement(cardData));
 });
 
+// edit profile elements
+const editProfileModal = document.querySelector("#edit-profile-modal");
 const profileEditButton = document.querySelector(".profile__edit-button");
-const modalExitButton = document.querySelector(".modal__exit-button");
-const modal = document.querySelector("#edit-profile-modal");
-
+const modalExitButton = editProfileModal.querySelector(".modal__exit-button");
 const profileName = document.querySelector(".profile__name");
 const profileDesc = document.querySelector(".profile__description");
-
+// edit profile form
 const modalForm = document.forms["profile-form"];
 const modalNameInput = document.querySelector("#input-name");
 const modalDescInput = document.querySelector("#input-description");
 
-profileEditButton.addEventListener("click", function () {
-  modal.classList.add("modal_opened");
+// add card elements
+const addCardModal = document.querySelector("#add-card-modal");
+const addCardOpenButton = document.querySelector(".profile__add-button");
+const addCardExitButton = addCardModal.querySelector(".modal__exit-button");
+
+profileEditButton.addEventListener("click", () => {
+  openModal(editProfileModal);
   modalNameInput.value = profileName.textContent;
   modalDescInput.value = profileDesc.textContent;
 });
-modalExitButton.addEventListener("click", closeModal);
-modalForm.addEventListener("submit", function (evt) {
+modalExitButton.addEventListener("click", () => {
+  closeModal(editProfileModal);
+});
+modalForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
-
+  closeModal(editProfileModal);
   profileName.textContent = modalNameInput.value;
   profileDesc.textContent = modalDescInput.value;
-
-  closeModal();
 });
 
-function closeModal() {
+addCardOpenButton.addEventListener("click", () => {
+  openModal(addCardModal);
+});
+addCardExitButton.addEventListener("click", () => {
+  closeModal(addCardModal);
+});
+
+function openModal(modal) {
+  modal.classList.add("modal_opened");
+}
+function closeModal(modal) {
   modal.classList.remove("modal_opened");
 }
 

@@ -90,6 +90,42 @@
             </form>
           </div>
         </section>
+        <!-- Add Image Modal -->
+        <section id="add-card-modal" class="modal">
+          <div class="modal__container">
+            <div class="modal__header-container">
+              <h2 class="modal__header-text">New post</h2>
+              <button class="modal__exit-button" type="button"></button>
+            </div>
+            <form class="modal__form" id="add-card-form">
+              <label for="add-card-input-link" class="modal__label"
+                >Image link</label
+              >
+              <input
+                id="add-card-input-link"
+                name="link"
+                type="url"
+                class="modal__input"
+                required
+                placeholder="Paste a link to the picture"
+              />
+              <label for="add-card-input-name" class="modal__label">
+                Caption
+              </label>
+              <input
+                id="add-card-input-name"
+                name="name"
+                type="text"
+                class="modal__input"
+                required
+                placeholder="Type your caption"
+              />
+              <button type="submit" class="modal__save-button">
+                <span class="modal__save-text">Save</span>
+              </button>
+            </form>
+          </div>
+        </section>
       </main>
       <footer class="footer">
         <p class="footer__text">2023 © Spots</p>

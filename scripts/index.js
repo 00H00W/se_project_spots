@@ -1,5 +1,9 @@
 const initialCards = [
   {
+    name: "Golden Gate bridge",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg",
+  },
+  {
     name: "Angkor Thom, Cambodia",
     link: "./images/content/place-images/AngkorThomCambodia.jpg",
   },
@@ -51,6 +55,12 @@ const addCardForm = document.forms["add-card-form"];
 const addCardFormLink = addCardForm.querySelector("#add-card-input-link");
 const addCardFormName = addCardForm.querySelector("#add-card-input-name");
 
+// image preview elements
+const previewModal = document.querySelector("#preview-modal");
+const previewExitButton = previewModal.querySelector(".modal__exit-button");
+const previewImage = previewModal.querySelector(".modal__image");
+const previewCaption = previewModal.querySelector(".modal__caption");
+
 // edit profile events
 profileEditButton.addEventListener("click", () => {
   openModal(editProfileModal);
@@ -80,6 +90,11 @@ addCardForm.addEventListener("submit", (evt) => {
   cardList.prepend(
     getCardElement({ link: addCardFormLink.value, name: addCardFormName.value })
   );
+});
+
+// preivew events
+previewExitButton.addEventListener("click", () => {
+  closeModal(previewModal);
 });
 
 function openModal(modal) {
@@ -112,6 +127,14 @@ function getCardElement(cardData) {
     .querySelector(".card__delete-button")
     .addEventListener("click", (evt) => {
       cardElement.remove();
+    });
+  cardElement // preivew image
+    .querySelector(".card__image")
+    .addEventListener("click", (evt) => {
+      openModal(previewModal);
+      previewImage.src = cardData.link;
+      previewImage.alt = cardData.name;
+      previewCaption.textContent = cardData.name;
     });
 
   return cardElement;

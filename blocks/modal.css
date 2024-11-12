@@ -18,12 +18,41 @@
 }
 
 .modal__container {
+  position: relative;
   background-color: #fff;
   border-radius: 8px;
   padding: 32px 50px;
   max-width: 730px;
   width: 100%;
   box-sizing: border-box;
+}
+.modal__container_type_preview {
+  padding: 0;
+  background: none;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  max-width: 80vw;
+}
+
+.modal__image {
+  object-fit: scale-down;
+  max-width: 80vw;
+  max-height: 80vh;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.modal__caption {
+  background-color: #212121;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 500;
+  margin: 8px 0 0;
+  color: #fff;
+  margin-right: auto;
 }
 
 .modal__header-container {
@@ -47,12 +76,20 @@
   background-image: url(../images/components/exit-button.svg);
   background-position: center;
   background-size: cover;
-  background-color: white;
+  background-color: transparent;
   border: none;
   opacity: 40%;
   padding: 0;
   cursor: pointer;
 }
+.modal__exit-button_type_preview {
+  background-image: url(../images/components/exit-button-white.svg);
+  position: absolute;
+  top: 0;
+  right: -52.5px;
+  opacity: 1;
+}
+
 .modal__exit-button:hover {
   opacity: 1;
 }
@@ -111,6 +148,9 @@
   .modal__container {
     padding: 12px;
   }
+  .modal__container_type_preview {
+    padding: 0;
+  }
 
   .modal__save-button {
     background-color: #212121;
@@ -133,5 +173,10 @@
     font-size: 16px;
     margin-bottom: 24px;
     height: 14px;
+  }
+
+  .modal__exit-button_type_preview {
+    top: -48px;
+    right: 0;
   }
 }

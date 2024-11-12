@@ -102,5 +102,12 @@ function getCardElement(cardData) {
   cardImage.src = cardData.link;
   cardImage.alt = cardData.name;
 
+  // Setup buttons
+  cardElement
+    .querySelector(".card__like-button")
+    .addEventListener("click", (evt) => {
+      evt.currentTarget.classList.toggle("card__like-button_liked");
+    });
+
   return cardElement;
 }

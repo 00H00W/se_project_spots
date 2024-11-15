@@ -155,6 +155,7 @@
   }
   .modal__container_type_preview {
     padding: 0;
+    max-width: 288px;
   }
 
   .modal__save-button {

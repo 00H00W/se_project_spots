@@ -77,8 +77,6 @@ profileForm.addEventListener("submit", (evt) => {
 
 // add card events
 addCardOpenButton.addEventListener("click", () => {
-  addCardFormLink.value = "";
-  addCardFormName.value = "";
   openModal(addCardModal);
 });
 addCardExitButton.addEventListener("click", () => {
@@ -90,7 +88,7 @@ addCardForm.addEventListener("submit", (evt) => {
   cardList.prepend(
     getCardElement({ link: addCardFormLink.value, name: addCardFormName.value })
   );
-  evt.target.reset;
+  evt.target.reset();
 });
 
 // preivew events

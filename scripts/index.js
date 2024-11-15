@@ -128,8 +128,7 @@ function getCardElement(cardData) {
     .addEventListener("click", (evt) => {
       cardElement.remove();
     });
-  cardElement // preivew image
-    .querySelector(".card__image")
+  cardImage // preivew image
     .addEventListener("click", (evt) => {
       openModal(previewModal);
       previewImage.src = cardData.link;

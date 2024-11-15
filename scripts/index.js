@@ -90,6 +90,7 @@ addCardForm.addEventListener("submit", (evt) => {
   cardList.prepend(
     getCardElement({ link: addCardFormLink.value, name: addCardFormName.value })
   );
+  evt.target.reset;
 });
 
 // preivew events
@@ -103,7 +104,6 @@ function openModal(modal) {
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
 }
-
 function getCardElement(cardData) {
   // Create Card From Template
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);

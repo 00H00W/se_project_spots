@@ -79,6 +79,8 @@ modalForm.addEventListener("submit", (evt) => {
 
 // add card events
 addCardOpenButton.addEventListener("click", () => {
+  addCardFormLink.value = "";
+  addCardFormName.value = "";
   openModal(addCardModal);
 });
 addCardExitButton.addEventListener("click", () => {

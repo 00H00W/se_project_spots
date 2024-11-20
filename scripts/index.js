@@ -105,15 +105,11 @@ previewExitButton.addEventListener("click", () => {
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
-  document.addEventListener("keydown", (evt) =>
-    modalEscapeListener(evt, modal)
-  );
+  document.addEventListener("keydown", modalEscapeListener);
 }
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
-  document.removeEventListener("keydown", (evt) =>
-    modalEscapeListener(evt, modal)
-  );
+  document.removeEventListener("keydown", modalEscapeListener);
 }
 function getCardElement(cardData) {
   // Create Card From Template
@@ -159,8 +155,8 @@ modals.forEach((modal) => {
   });
 });
 
-const modalEscapeListener = (evt, modal) => {
+const modalEscapeListener = (evt) => {
   if (evt.key === "Escape") {
-    closeModal(modal);
+    closeModal(document.querySelector(".modal_opened"));
   }
 };

@@ -78,7 +78,7 @@
                   minlength="2"
                   maxlength="40"
                 />
-                <span class="modal__error"></span>
+                <span id="input-name-error" class="modal__error"></span>
               </label>
               <label for="input-description" class="modal__label">
                 Description
@@ -91,7 +91,7 @@
                   minlength="2"
                   maxlength="200"
                 />
-                <span class="modal__error"></span>
+                <span id="input-description-error" class="modal__error"></span>
               </label>
               <button type="submit" class="modal__save-button">
                 <span class="modal__save-text">Save</span>
@@ -117,7 +117,10 @@
                   required
                   placeholder="Paste a link to the picture"
                 />
-                <span class="modal__error"></span>
+                <span
+                  id="add-card-input-link-error"
+                  class="modal__error"
+                ></span>
               </label>
               <label for="add-card-input-name" class="modal__label">
                 Caption
@@ -131,7 +134,10 @@
                   minlength="2"
                   maxlength="30"
                 />
-                <span class="modal__error"></span>
+                <span
+                  id="add-card-input-name-error"
+                  class="modal__error"
+                ></span>
               </label>
               <button type="submit" class="modal__save-button">
                 <span class="modal__save-text">Save</span>
@@ -157,6 +163,7 @@
       </footer>
     </div>
     <!-- Scripts -->
+    <script defer src="scripts/validation.js"></script>
     <script defer src="scripts/index.js"></script>
   </body>
 </html>

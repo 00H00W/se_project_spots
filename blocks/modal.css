@@ -111,11 +111,13 @@
   font-size: 16px;
   line-height: 1.1;
   color: rgba(33, 33, 33, 0.7);
-  margin: 0 0 8px;
+  margin: 0 0 32px;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal__input {
-  margin: 0 0 32px;
+  margin: 8px 0 0;
   border: 1px rgba(33, 33, 33, 0.4) solid;
   border-radius: 8px;
   padding: 16px 12px;
@@ -127,6 +129,11 @@
 }
 .modal__input:hover {
   border-color: rgba(33, 33, 33, 1);
+}
+
+.modal__error {
+  margin-top: 8px;
+  color: rgba(255, 0, 0, 0.7);
 }
 
 .modal__save-button {

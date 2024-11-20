@@ -147,6 +147,9 @@
   margin-right: auto;
   cursor: pointer;
 }
+.modal__save-button_disabled {
+  background-color: rgba(33, 33, 33, 0.5);
+}
 .modal__save-button:hover {
   background-color: rgba(33, 33, 33, 0.8);
 }

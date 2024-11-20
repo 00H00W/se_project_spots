@@ -6,14 +6,14 @@ const enableValidation = () => {
 };
 
 const setEventListeners = (formElement) => {
-  const inputList = formElement.querySelectorAll(".modal__input");
+  const inputList = Array.from(formElement.querySelectorAll(".modal__input"));
   const buttonElement = formElement.querySelector(".modal__save-button");
 
   // toggleButtonState(inputList, buttonElement);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", () => {
       checkInputValidity(formElement, inputElement);
-      // toggleButtonState(inputList, buttonElement);
+      toggleButtonState(inputList, buttonElement);
     });
   });
 };
@@ -32,6 +32,19 @@ const showInputError = (formElement, inputElement, errorMessage) => {
 const hideInputError = (formElement, inputElement) => {
   formElement.querySelector(`#${inputElement.id}-error`).textContent = "";
   inputElement.classList.remove("modal__input_type_error");
+};
+
+const toggleButtonState = (inputList, buttonElement) => {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.disabled = true;
+    buttonElement.classList.add("modal__save-button_disabled");
+  } else {
+    buttonElement.disabled = false;
+    buttonElement.classList.remove("modal__save-button_disabled");
+  }
+};
+const hasInvalidInput = (inputList) => {
+  return inputList.some((element) => !element.validity.valid);
 };
 
 enableValidation();

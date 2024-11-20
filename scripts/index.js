@@ -65,7 +65,11 @@ profileEditButton.addEventListener("click", () => {
   openModal(profileModal);
   profilNameInput.value = profileName.textContent;
   profileDescInput.value = profileDesc.textContent;
-  resetValidation(profileForm, [profilNameInput, profileDescInput]);
+  resetValidation(
+    profileForm,
+    [profilNameInput, profileDescInput],
+    configSettings
+  );
 });
 profileExitButton.addEventListener("click", () => {
   closeModal(profileModal);
@@ -91,7 +95,7 @@ addCardForm.addEventListener("submit", (evt) => {
     getCardElement({ link: addCardFormLink.value, name: addCardFormName.value })
   );
   evt.target.reset();
-  disableButton(addCardSubmitButton);
+  disableButton(addCardSubmitButton, configSettings);
 });
 
 // preivew events

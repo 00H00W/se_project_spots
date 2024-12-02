@@ -21,11 +21,21 @@
       <main class="content">
         <!-- Profile -->
         <section class="profile page__section">
-          <img
-            src="<%=require('./images/content/avatar.jpg')%>"
-            alt="Bessie Coleman Avatar"
-            class="profile__avatar"
-          />
+          <div class="profile__avatar-container">
+            <button class="profile__avatar-button">
+              <img
+                src="<%=require('./images/components/edit-icon-white.svg')%>"
+                alt="pencil icon"
+                class="profile__pencil-icon"
+              />
+            </button>
+            <img
+              src="<%=require('./images/content/avatar.jpg')%>"
+              alt="User Avatar"
+              class="profile__avatar"
+            />
+          </div>
+
           <div class="profile__column">
             <h1 class="profile__name">Bessie Coleman</h1>
             <p class="profile__description">Civil Aviator</p>
@@ -160,6 +170,33 @@
             <img class="modal__image" src="#" alt="" />
             <p class="modal__caption"></p>
             <!-- TODO convert to figure and caption -->
+          </div>
+        </section>
+        <!-- Edit Avatar Modal -->
+        <section id="avatar-modal" class="modal">
+          <div class="modal__container">
+            <div class="modal__header-container">
+              <h2 class="modal__header-text">Edit profile avatar</h2>
+              <button class="modal__exit-button" type="button"></button>
+            </div>
+            <form class="modal__form" id="avatar-form" novalidate>
+              <label for="avatar-input-link" class="modal__label"
+                >Profile Picture
+                <input
+                  id="avatar-input-link"
+                  name="link"
+                  type="url"
+                  class="modal__input"
+                  required
+                  placeholder="Paste the link to an image"
+                />
+                <span id="avatar-input-link-error" class="modal__error"></span>
+              </label>
+
+              <button type="submit" class="modal__save-button">
+                <span class="modal__save-text">Save</span>
+              </button>
+            </form>
           </div>
         </section>
       </main>

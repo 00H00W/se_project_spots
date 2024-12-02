@@ -1,4 +1,8 @@
-import { enableValidation, configSettings } from "../scripts/validation.js";
+import {
+  enableValidation,
+  configSettings,
+  resetValidation,
+} from "../scripts/validation.js";
 import Api from "../utils/Api.js";
 import "./index.css";
 // const initialCards = [
@@ -60,10 +64,13 @@ const api = new Api({
 
 api
   .getAppInfo()
-  .then(([cards]) => {
+  .then(([cards, userInfo]) => {
     cards.forEach((cardData) => {
       cardList.append(getCardElement(cardData));
     });
+    profileName.textContent = userInfo.name;
+    profileDesc.textContent = userInfo.about;
+    profileImage.src = userInfo.avatar;
   })
   .catch(console.error);
 
@@ -76,6 +83,7 @@ const profileEditButton = document.querySelector(".profile__edit-button");
 const profileExitButton = profileModal.querySelector(".modal__exit-button");
 const profileName = document.querySelector(".profile__name");
 const profileDesc = document.querySelector(".profile__description");
+const profileImage = document.querySelector(".profile__avatar");
 const profileForm = document.forms["profile-form"];
 const profilNameInput = profileForm.querySelector("#input-name");
 const profileDescInput = profileForm.querySelector("#input-description");
@@ -95,6 +103,32 @@ const previewExitButton = previewModal.querySelector(".modal__exit-button");
 const previewImage = previewModal.querySelector(".modal__image");
 const previewCaption = previewModal.querySelector(".modal__caption");
 
+// avatar elements
+const avatarOpenButton = document.querySelector(".profile__avatar-button");
+const avatarModal = document.querySelector("#avatar-modal");
+const avatarCloseButton = avatarModal.querySelector(".modal__exit-button");
+const avatarSubmitButton = avatarModal.querySelector(".modal__save-button");
+const avatarForm = document.forms["avatar-form"];
+const avatarFormLink = avatarForm.querySelector("#avatar-input-link");
+
+// avatar events
+avatarOpenButton.addEventListener("click", () => {
+  openModal(avatarModal);
+});
+avatarCloseButton.addEventListener("click", () => {
+  closeModal(avatarModal);
+});
+avatarForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  api
+    .editUserAvatar(avatarFormLink.value)
+    .then((data) => {
+      profileImage.src = data.avatar;
+      closeModal(avatarModal);
+    })
+    .catch(console.error);
+});
+
 // edit profile events
 profileEditButton.addEventListener("click", () => {
   openModal(profileModal);
@@ -111,9 +145,17 @@ profileExitButton.addEventListener("click", () => {
 });
 profileForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
-  closeModal(profileModal);
-  profileName.textContent = profilNameInput.value;
-  profileDesc.textContent = profileDescInput.value;
+  api
+    .editUserInfo({
+      name: profilNameInput.value,
+      about: profileDescInput.value,
+    })
+    .then((data) => {
+      profileName.textContent = data.name;
+      profileDesc.textContent = data.about;
+      closeModal(profileModal);
+    })
+    .catch(console.error);
 });
 
 // add card events

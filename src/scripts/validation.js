@@ -41,7 +41,7 @@ const checkInputValidity = (formElement, inputElement, config) => {
     );
 };
 
-const resetValidation = (formElement, inputList, config) => {
+export const resetValidation = (formElement, inputList, config) => {
   inputList.forEach((input) => {
     hideInputError(formElement, input, config);
   });

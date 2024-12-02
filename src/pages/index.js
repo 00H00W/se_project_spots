@@ -5,6 +5,10 @@ import {
 } from "../scripts/validation.js";
 import Api from "../utils/Api.js";
 import "./index.css";
+
+let selectedCard;
+let selectedCardId;
+
 // const initialCards = [
 //   {
 //     name: "Golden Gate bridge",
@@ -123,6 +127,15 @@ deleteCloseButton.addEventListener("click", () => {
 deleteCancelButton.addEventListener("click", () => {
   closeModal(deleteModal);
 });
+deleteConfirmButton.addEventListener("click", () => {
+  api
+    .deleteCard(selectedCardId)
+    .then((res) => {
+      closeModal(deleteModal);
+      selectedCard.remove();
+    })
+    .catch(console.error);
+});
 
 // avatar events
 avatarOpenButton.addEventListener("click", () => {
@@ -224,7 +237,8 @@ function getCardElement(cardData) {
     .querySelector(".card__delete-button")
     .addEventListener("click", (evt) => {
       openModal(deleteModal);
-      cardElement.remove();
+      selectedCard = cardElement;
+      selectedCardId = cardData._id;
     });
   cardImage // preivew image
     .addEventListener("click", (evt) => {

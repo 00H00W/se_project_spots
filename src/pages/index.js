@@ -129,13 +129,15 @@ deleteCancelButton.addEventListener("click", () => {
   closeModal(deleteModal);
 });
 deleteConfirmButton.addEventListener("click", () => {
+  deleteConfirmButton.textContent = "Deleting...";
   api
     .deleteCard(selectedCardId)
     .then((res) => {
       closeModal(deleteModal);
       selectedCard.remove();
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => (deleteConfirmButton.textContent = "Delete"));
 });
 
 // avatar events
@@ -147,13 +149,15 @@ avatarCloseButton.addEventListener("click", () => {
 });
 avatarForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
+  evt.submitter.textContent = "Saving...";
   api
     .editUserAvatar(avatarFormLink.value)
     .then((data) => {
       profileImage.src = data.avatar;
       closeModal(avatarModal);
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => (evt.submitter.textContent = "Save"));
 });
 
 // edit profile events
@@ -172,6 +176,7 @@ profileExitButton.addEventListener("click", () => {
 });
 profileForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
+  evt.submitter.textContent = "Saving...";
   api
     .editUserInfo({
       name: profilNameInput.value,
@@ -182,7 +187,10 @@ profileForm.addEventListener("submit", (evt) => {
       profileDesc.textContent = data.about;
       closeModal(profileModal);
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      evt.submitter.textContent = "Save";
+    });
 });
 
 // add card events
@@ -194,7 +202,7 @@ addCardExitButton.addEventListener("click", () => {
 });
 addCardForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
-
+  evt.submitter.textContent = "Saving...";
   api
     .addCard({ link: addCardFormLink.value, name: addCardFormName.value })
     .then((res) => {
@@ -203,7 +211,10 @@ addCardForm.addEventListener("submit", (evt) => {
       evt.target.reset();
       disableButton(addCardSubmitButton, configSettings);
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      evt.submitter.textContent = "Save";
+    });
 });
 
 // preivew events

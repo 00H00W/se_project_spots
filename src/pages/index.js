@@ -107,9 +107,22 @@ const previewCaption = previewModal.querySelector(".modal__caption");
 const avatarOpenButton = document.querySelector(".profile__avatar-button");
 const avatarModal = document.querySelector("#avatar-modal");
 const avatarCloseButton = avatarModal.querySelector(".modal__exit-button");
-const avatarSubmitButton = avatarModal.querySelector(".modal__save-button");
 const avatarForm = document.forms["avatar-form"];
 const avatarFormLink = avatarForm.querySelector("#avatar-input-link");
+
+// delete elements
+const deleteModal = document.querySelector("#delete-modal");
+const deleteCloseButton = deleteModal.querySelector(".modal__exit-button");
+const deleteCancelButton = deleteModal.querySelector("#cancel-button");
+const deleteConfirmButton = deleteModal.querySelector("#delete-button");
+
+// delete events
+deleteCloseButton.addEventListener("click", () => {
+  closeModal(deleteModal);
+});
+deleteCancelButton.addEventListener("click", () => {
+  closeModal(deleteModal);
+});
 
 // avatar events
 avatarOpenButton.addEventListener("click", () => {
@@ -210,6 +223,7 @@ function getCardElement(cardData) {
   cardElement // delete button
     .querySelector(".card__delete-button")
     .addEventListener("click", (evt) => {
+      openModal(deleteModal);
       cardElement.remove();
     });
   cardImage // preivew image

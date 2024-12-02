@@ -1,3 +1,5 @@
+import { enableValidation, configSettings } from "../scripts/validation.js";
+import "./index.css";
 const initialCards = [
   {
     name: "Golden Gate bridge",
@@ -5,27 +7,45 @@ const initialCards = [
   },
   {
     name: "Angkor Thom, Cambodia",
-    link: "./images/content/place-images/AngkorThomCambodia.jpg",
+    link: new URL(
+      "../images/content/place-images/AngkorThomCambodia.jpg",
+      import.meta.url
+    ),
   },
   {
     name: "Petra, Jordan",
-    link: "./images/content/place-images/PetraJordan.jpg",
+    link: new URL(
+      "../images/content/place-images/PetraJordan.jpg",
+      import.meta.url
+    ),
   },
   {
     name: "Machu Picchu, Peru",
-    link: "./images/content/place-images/MachuPicchuPeru.jpg",
+    link: new URL(
+      "../images/content/place-images/MachuPicchuPeru.jpg",
+      import.meta.url
+    ),
   },
   {
     name: "Giza, Egypt",
-    link: "./images/content/place-images/GizaEgypt.jpg",
+    link: new URL(
+      "../images/content/place-images/GizaEgypt.jpg",
+      import.meta.url
+    ),
   },
   {
     name: "Chichén Itzá, Mexico",
-    link: "./images/content/place-images/ChichenItzaMexico.jpg",
+    link: new URL(
+      "../images/content/place-images/ChichenItzaMexico.jpg",
+      import.meta.url
+    ),
   },
   {
     name: "Taj Mahal, India",
-    link: "./images/content/place-images/TajMahalIndia.jpg",
+    link: new URL(
+      "../images/content/place-images/TajMahalIndia.jpg",
+      import.meta.url
+    ),
   },
 ];
 
@@ -160,3 +180,5 @@ const modalEscapeListener = (evt) => {
     closeModal(document.querySelector(".modal_opened"));
   }
 };
+
+enableValidation(configSettings);

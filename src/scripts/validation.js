@@ -1,4 +1,4 @@
-const configSettings = {
+export const configSettings = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__save-button",
@@ -7,7 +7,7 @@ const configSettings = {
   // errorClass: "modal__error_visible",
 };
 
-const enableValidation = (config) => {
+export const enableValidation = (config) => {
   const formList = document.querySelectorAll(config.formSelector);
   formList.forEach((formElement) => {
     setEventListeners(formElement, config);
@@ -71,5 +71,3 @@ const disableButton = (buttonElement, config) => {
 const hasInvalidInput = (inputList) => {
   return inputList.some((element) => !element.validity.valid);
 };
-
-enableValidation(configSettings);

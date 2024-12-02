@@ -2,6 +2,7 @@ import {
   enableValidation,
   configSettings,
   resetValidation,
+  disableButton,
 } from "../scripts/validation.js";
 import Api from "../utils/Api.js";
 import "./index.css";
@@ -232,10 +233,19 @@ function getCardElement(cardData) {
   cardImage.alt = cardData.name;
 
   // Setup buttons
-  cardElement // like button
-    .querySelector(".card__like-button")
+  const likeButton = cardElement.querySelector(".card__like-button");
+  if (cardData.isLiked) likeButton.classList.add("card__like-button_liked");
+  likeButton // like button
     .addEventListener("click", (evt) => {
-      evt.currentTarget.classList.toggle("card__like-button_liked");
+      api
+        .changeLike(
+          likeButton.classList.contains("card__like-button_liked"),
+          cardData._id
+        )
+        .then(() => {
+          likeButton.classList.toggle("card__like-button_liked");
+        })
+        .catch(console.error);
     });
   cardElement // delete button
     .querySelector(".card__delete-button")

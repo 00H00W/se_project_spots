@@ -193,12 +193,16 @@ addCardExitButton.addEventListener("click", () => {
 });
 addCardForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
-  closeModal(addCardModal);
-  cardList.prepend(
-    getCardElement({ link: addCardFormLink.value, name: addCardFormName.value })
-  );
-  evt.target.reset();
-  disableButton(addCardSubmitButton, configSettings);
+
+  api
+    .addCard({ link: addCardFormLink.value, name: addCardFormName.value })
+    .then((res) => {
+      closeModal(addCardModal);
+      cardList.prepend(getCardElement(res));
+      evt.target.reset();
+      disableButton(addCardSubmitButton, configSettings);
+    })
+    .catch(console.error);
 });
 
 // preivew events

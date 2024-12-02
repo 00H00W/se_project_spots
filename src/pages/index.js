@@ -1,59 +1,74 @@
 import { enableValidation, configSettings } from "../scripts/validation.js";
+import Api from "../utils/Api.js";
 import "./index.css";
-const initialCards = [
-  {
-    name: "Golden Gate bridge",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg",
+// const initialCards = [
+//   {
+//     name: "Golden Gate bridge",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg",
+//   },
+//   {
+//     name: "Angkor Thom, Cambodia",
+//     link: new URL(
+//       "../images/content/place-images/AngkorThomCambodia.jpg",
+//       import.meta.url
+//     ),
+//   },
+//   {
+//     name: "Petra, Jordan",
+//     link: new URL(
+//       "../images/content/place-images/PetraJordan.jpg",
+//       import.meta.url
+//     ),
+//   },
+//   {
+//     name: "Machu Picchu, Peru",
+//     link: new URL(
+//       "../images/content/place-images/MachuPicchuPeru.jpg",
+//       import.meta.url
+//     ),
+//   },
+//   {
+//     name: "Giza, Egypt",
+//     link: new URL(
+//       "../images/content/place-images/GizaEgypt.jpg",
+//       import.meta.url
+//     ),
+//   },
+//   {
+//     name: "Chichén Itzá, Mexico",
+//     link: new URL(
+//       "../images/content/place-images/ChichenItzaMexico.jpg",
+//       import.meta.url
+//     ),
+//   },
+//   {
+//     name: "Taj Mahal, India",
+//     link: new URL(
+//       "../images/content/place-images/TajMahalIndia.jpg",
+//       import.meta.url
+//     ),
+//   },
+// ];
+
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "6f5c355c-ba63-4c32-a72d-75121ae25533",
+    "Content-Type": "application/json",
   },
-  {
-    name: "Angkor Thom, Cambodia",
-    link: new URL(
-      "../images/content/place-images/AngkorThomCambodia.jpg",
-      import.meta.url
-    ),
-  },
-  {
-    name: "Petra, Jordan",
-    link: new URL(
-      "../images/content/place-images/PetraJordan.jpg",
-      import.meta.url
-    ),
-  },
-  {
-    name: "Machu Picchu, Peru",
-    link: new URL(
-      "../images/content/place-images/MachuPicchuPeru.jpg",
-      import.meta.url
-    ),
-  },
-  {
-    name: "Giza, Egypt",
-    link: new URL(
-      "../images/content/place-images/GizaEgypt.jpg",
-      import.meta.url
-    ),
-  },
-  {
-    name: "Chichén Itzá, Mexico",
-    link: new URL(
-      "../images/content/place-images/ChichenItzaMexico.jpg",
-      import.meta.url
-    ),
-  },
-  {
-    name: "Taj Mahal, India",
-    link: new URL(
-      "../images/content/place-images/TajMahalIndia.jpg",
-      import.meta.url
-    ),
-  },
-];
+});
+
+api
+  .getInitialCards()
+  .then((cards) => {
+    cards.forEach((cardData) => {
+      cardList.append(getCardElement(cardData));
+    });
+  })
+  .catch(console.error);
 
 const cardTemplate = document.querySelector("#card-template").content;
 const cardList = document.querySelector(".cards__list");
-initialCards.forEach((cardData) => {
-  cardList.append(getCardElement(cardData));
-});
 
 // edit profile elements
 const profileModal = document.querySelector("#edit-profile-modal");

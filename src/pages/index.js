@@ -104,6 +104,7 @@ avatarForm.addEventListener("submit", (evt) => {
     return api.editUserAvatar(avatarFormLink.value).then((data) => {
       profileImage.src = data.avatar;
       closeModal(avatarModal);
+      disableButton(evt.submitter, configSettings);
     });
   });
 });

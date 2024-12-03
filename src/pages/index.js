@@ -85,13 +85,10 @@ deleteForm.addEventListener("submit", (evt) => {
   handleFormSubmit(
     evt,
     () => {
-      return api
-        .deleteCard(selectedCardId)
-        .then((res) => {
-          closeModal(deleteModal);
-          selectedCard.remove();
-        })
-        .catch(console.error);
+      return api.deleteCard(selectedCardId).then((res) => {
+        closeModal(deleteModal);
+        selectedCard.remove();
+      });
     },
     "Delete",
     "Deleting..."
@@ -104,13 +101,10 @@ avatarOpenButton.addEventListener("click", () => {
 });
 avatarForm.addEventListener("submit", (evt) => {
   handleFormSubmit(evt, () => {
-    return api
-      .editUserAvatar(avatarFormLink.value)
-      .then((data) => {
-        profileImage.src = data.avatar;
-        closeModal(avatarModal);
-      })
-      .catch(console.error);
+    return api.editUserAvatar(avatarFormLink.value).then((data) => {
+      profileImage.src = data.avatar;
+      closeModal(avatarModal);
+    });
   });
 });
 
@@ -136,8 +130,7 @@ profileForm.addEventListener("submit", (evt) => {
         profileName.textContent = data.name;
         profileDesc.textContent = data.about;
         closeModal(profileModal);
-      })
-      .catch(console.error);
+      });
   });
 });
 
@@ -153,8 +146,7 @@ addCardForm.addEventListener("submit", (evt) => {
         closeModal(addCardModal);
         cardList.prepend(getCardElement(res));
         disableButton(addCardSubmitButton, configSettings);
-      })
-      .catch(console.error);
+      });
   });
 });
 

@@ -10,55 +10,6 @@ import "./index.css";
 let selectedCard;
 let selectedCardId;
 
-// const initialCards = [
-//   {
-//     name: "Golden Gate bridge",
-//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg",
-//   },
-//   {
-//     name: "Angkor Thom, Cambodia",
-//     link: new URL(
-//       "../images/content/place-images/AngkorThomCambodia.jpg",
-//       import.meta.url
-//     ),
-//   },
-//   {
-//     name: "Petra, Jordan",
-//     link: new URL(
-//       "../images/content/place-images/PetraJordan.jpg",
-//       import.meta.url
-//     ),
-//   },
-//   {
-//     name: "Machu Picchu, Peru",
-//     link: new URL(
-//       "../images/content/place-images/MachuPicchuPeru.jpg",
-//       import.meta.url
-//     ),
-//   },
-//   {
-//     name: "Giza, Egypt",
-//     link: new URL(
-//       "../images/content/place-images/GizaEgypt.jpg",
-//       import.meta.url
-//     ),
-//   },
-//   {
-//     name: "Chichén Itzá, Mexico",
-//     link: new URL(
-//       "../images/content/place-images/ChichenItzaMexico.jpg",
-//       import.meta.url
-//     ),
-//   },
-//   {
-//     name: "Taj Mahal, India",
-//     link: new URL(
-//       "../images/content/place-images/TajMahalIndia.jpg",
-//       import.meta.url
-//     ),
-//   },
-// ];
-
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {

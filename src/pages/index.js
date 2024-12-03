@@ -68,6 +68,7 @@ const avatarFormLink = avatarForm.querySelector("#avatar-input-link");
 
 // delete elements
 const deleteModal = document.querySelector("#delete-modal");
+const deleteForm = document.forms["delete-form"];
 const deleteCloseButton = deleteModal.querySelector(".modal__exit-button");
 const deleteCancelButton = deleteModal.querySelector("#cancel-button");
 const deleteConfirmButton = deleteModal.querySelector("#delete-button");
@@ -80,16 +81,21 @@ closeButtons.forEach((button) => {
 });
 
 // delete events
-deleteConfirmButton.addEventListener("click", () => {
-  deleteConfirmButton.textContent = "Deleting...";
-  api
-    .deleteCard(selectedCardId)
-    .then((res) => {
-      closeModal(deleteModal);
-      selectedCard.remove();
-    })
-    .catch(console.error)
-    .finally(() => (deleteConfirmButton.textContent = "Delete"));
+deleteForm.addEventListener("submit", (evt) => {
+  handleFormSubmit(
+    evt,
+    () => {
+      return api
+        .deleteCard(selectedCardId)
+        .then((res) => {
+          closeModal(deleteModal);
+          selectedCard.remove();
+        })
+        .catch(console.error);
+    },
+    "Delete",
+    "Deleting..."
+  );
 });
 
 // avatar events
@@ -97,16 +103,15 @@ avatarOpenButton.addEventListener("click", () => {
   openModal(avatarModal);
 });
 avatarForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  evt.submitter.textContent = "Saving...";
-  api
-    .editUserAvatar(avatarFormLink.value)
-    .then((data) => {
-      profileImage.src = data.avatar;
-      closeModal(avatarModal);
-    })
-    .catch(console.error)
-    .finally(() => (evt.submitter.textContent = "Save"));
+  handleFormSubmit(evt, () => {
+    return api
+      .editUserAvatar(avatarFormLink.value)
+      .then((data) => {
+        profileImage.src = data.avatar;
+        closeModal(avatarModal);
+      })
+      .catch(console.error);
+  });
 });
 
 // edit profile events
@@ -121,22 +126,19 @@ profileEditButton.addEventListener("click", () => {
   );
 });
 profileForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  evt.submitter.textContent = "Saving...";
-  api
-    .editUserInfo({
-      name: profilNameInput.value,
-      about: profileDescInput.value,
-    })
-    .then((data) => {
-      profileName.textContent = data.name;
-      profileDesc.textContent = data.about;
-      closeModal(profileModal);
-    })
-    .catch(console.error)
-    .finally(() => {
-      evt.submitter.textContent = "Save";
-    });
+  handleFormSubmit(evt, () => {
+    return api
+      .editUserInfo({
+        name: profilNameInput.value,
+        about: profileDescInput.value,
+      })
+      .then((data) => {
+        profileName.textContent = data.name;
+        profileDesc.textContent = data.about;
+        closeModal(profileModal);
+      })
+      .catch(console.error);
+  });
 });
 
 // add card events
@@ -144,20 +146,16 @@ addCardOpenButton.addEventListener("click", () => {
   openModal(addCardModal);
 });
 addCardForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  evt.submitter.textContent = "Saving...";
-  api
-    .addCard({ link: addCardFormLink.value, name: addCardFormName.value })
-    .then((res) => {
-      closeModal(addCardModal);
-      cardList.prepend(getCardElement(res));
-      evt.target.reset();
-      disableButton(addCardSubmitButton, configSettings);
-    })
-    .catch(console.error)
-    .finally(() => {
-      evt.submitter.textContent = "Save";
-    });
+  handleFormSubmit(evt, () => {
+    return api
+      .addCard({ link: addCardFormLink.value, name: addCardFormName.value })
+      .then((res) => {
+        closeModal(addCardModal);
+        cardList.prepend(getCardElement(res));
+        disableButton(addCardSubmitButton, configSettings);
+      })
+      .catch(console.error);
+  });
 });
 
 function openModal(modal) {
@@ -228,5 +226,24 @@ const modalEscapeListener = (evt) => {
     closeModal(document.querySelector(".modal_opened"));
   }
 };
+
+function handleFormSubmit(
+  evt,
+  submitCallback,
+  defualtText = "Save",
+  loadingText = "Saving..."
+) {
+  evt.preventDefault();
+  const submitText = evt.submitter;
+  submitText.textContent = loadingText;
+  submitCallback()
+    .then(() => {
+      evt.target.reset();
+    })
+    .catch(console.error)
+    .finally(() => {
+      submitText.textContent = defualtText;
+    });
+}
 
 enableValidation(configSettings);

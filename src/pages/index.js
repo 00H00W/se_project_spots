@@ -72,13 +72,14 @@ const deleteCloseButton = deleteModal.querySelector(".modal__exit-button");
 const deleteCancelButton = deleteModal.querySelector("#cancel-button");
 const deleteConfirmButton = deleteModal.querySelector("#delete-button");
 
+// close button assignment
+const closeButtons = document.querySelectorAll(".modal__close");
+closeButtons.forEach((button) => {
+  const popup = button.closest(".modal");
+  button.addEventListener("click", () => closeModal(popup));
+});
+
 // delete events
-deleteCloseButton.addEventListener("click", () => {
-  closeModal(deleteModal);
-});
-deleteCancelButton.addEventListener("click", () => {
-  closeModal(deleteModal);
-});
 deleteConfirmButton.addEventListener("click", () => {
   deleteConfirmButton.textContent = "Deleting...";
   api
@@ -94,9 +95,6 @@ deleteConfirmButton.addEventListener("click", () => {
 // avatar events
 avatarOpenButton.addEventListener("click", () => {
   openModal(avatarModal);
-});
-avatarCloseButton.addEventListener("click", () => {
-  closeModal(avatarModal);
 });
 avatarForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
@@ -122,9 +120,6 @@ profileEditButton.addEventListener("click", () => {
     configSettings
   );
 });
-profileExitButton.addEventListener("click", () => {
-  closeModal(profileModal);
-});
 profileForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   evt.submitter.textContent = "Saving...";
@@ -148,9 +143,6 @@ profileForm.addEventListener("submit", (evt) => {
 addCardOpenButton.addEventListener("click", () => {
   openModal(addCardModal);
 });
-addCardExitButton.addEventListener("click", () => {
-  closeModal(addCardModal);
-});
 addCardForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   evt.submitter.textContent = "Saving...";
@@ -166,11 +158,6 @@ addCardForm.addEventListener("submit", (evt) => {
     .finally(() => {
       evt.submitter.textContent = "Save";
     });
-});
-
-// preivew events
-previewExitButton.addEventListener("click", () => {
-  closeModal(previewModal);
 });
 
 function openModal(modal) {

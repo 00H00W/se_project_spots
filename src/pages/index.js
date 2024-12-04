@@ -1,59 +1,37 @@
-import { enableValidation, configSettings } from "../scripts/validation.js";
+import {
+  enableValidation,
+  configSettings,
+  resetValidation,
+  disableButton,
+} from "../scripts/validation.js";
+import Api from "../utils/Api.js";
 import "./index.css";
-const initialCards = [
-  {
-    name: "Golden Gate bridge",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg",
+
+let selectedCard;
+let selectedCardId;
+
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "6f5c355c-ba63-4c32-a72d-75121ae25533",
+    "Content-Type": "application/json",
   },
-  {
-    name: "Angkor Thom, Cambodia",
-    link: new URL(
-      "../images/content/place-images/AngkorThomCambodia.jpg",
-      import.meta.url
-    ),
-  },
-  {
-    name: "Petra, Jordan",
-    link: new URL(
-      "../images/content/place-images/PetraJordan.jpg",
-      import.meta.url
-    ),
-  },
-  {
-    name: "Machu Picchu, Peru",
-    link: new URL(
-      "../images/content/place-images/MachuPicchuPeru.jpg",
-      import.meta.url
-    ),
-  },
-  {
-    name: "Giza, Egypt",
-    link: new URL(
-      "../images/content/place-images/GizaEgypt.jpg",
-      import.meta.url
-    ),
-  },
-  {
-    name: "Chichén Itzá, Mexico",
-    link: new URL(
-      "../images/content/place-images/ChichenItzaMexico.jpg",
-      import.meta.url
-    ),
-  },
-  {
-    name: "Taj Mahal, India",
-    link: new URL(
-      "../images/content/place-images/TajMahalIndia.jpg",
-      import.meta.url
-    ),
-  },
-];
+});
+
+api
+  .getAppInfo()
+  .then(([cards, userInfo]) => {
+    cards.forEach((cardData) => {
+      cardList.append(getCardElement(cardData));
+    });
+    profileName.textContent = userInfo.name;
+    profileDesc.textContent = userInfo.about;
+    profileImage.src = userInfo.avatar;
+  })
+  .catch(console.error);
 
 const cardTemplate = document.querySelector("#card-template").content;
 const cardList = document.querySelector(".cards__list");
-initialCards.forEach((cardData) => {
-  cardList.append(getCardElement(cardData));
-});
 
 // edit profile elements
 const profileModal = document.querySelector("#edit-profile-modal");
@@ -61,6 +39,7 @@ const profileEditButton = document.querySelector(".profile__edit-button");
 const profileExitButton = profileModal.querySelector(".modal__exit-button");
 const profileName = document.querySelector(".profile__name");
 const profileDesc = document.querySelector(".profile__description");
+const profileImage = document.querySelector(".profile__avatar");
 const profileForm = document.forms["profile-form"];
 const profilNameInput = profileForm.querySelector("#input-name");
 const profileDescInput = profileForm.querySelector("#input-description");
@@ -80,6 +59,56 @@ const previewExitButton = previewModal.querySelector(".modal__exit-button");
 const previewImage = previewModal.querySelector(".modal__image");
 const previewCaption = previewModal.querySelector(".modal__caption");
 
+// avatar elements
+const avatarOpenButton = document.querySelector(".profile__avatar-button");
+const avatarModal = document.querySelector("#avatar-modal");
+const avatarCloseButton = avatarModal.querySelector(".modal__exit-button");
+const avatarForm = document.forms["avatar-form"];
+const avatarFormLink = avatarForm.querySelector("#avatar-input-link");
+
+// delete elements
+const deleteModal = document.querySelector("#delete-modal");
+const deleteForm = document.forms["delete-form"];
+const deleteCloseButton = deleteModal.querySelector(".modal__exit-button");
+const deleteCancelButton = deleteModal.querySelector("#cancel-button");
+const deleteConfirmButton = deleteModal.querySelector("#delete-button");
+
+// close button assignment
+const closeButtons = document.querySelectorAll(".modal__close");
+closeButtons.forEach((button) => {
+  const popup = button.closest(".modal");
+  button.addEventListener("click", () => closeModal(popup));
+});
+
+// delete events
+deleteForm.addEventListener("submit", (evt) => {
+  handleFormSubmit(
+    evt,
+    () => {
+      return api.deleteCard(selectedCardId).then((res) => {
+        closeModal(deleteModal);
+        selectedCard.remove();
+      });
+    },
+    "Delete",
+    "Deleting..."
+  );
+});
+
+// avatar events
+avatarOpenButton.addEventListener("click", () => {
+  openModal(avatarModal);
+});
+avatarForm.addEventListener("submit", (evt) => {
+  handleFormSubmit(evt, () => {
+    return api.editUserAvatar(avatarFormLink.value).then((data) => {
+      profileImage.src = data.avatar;
+      closeModal(avatarModal);
+      disableButton(evt.submitter, configSettings);
+    });
+  });
+});
+
 // edit profile events
 profileEditButton.addEventListener("click", () => {
   openModal(profileModal);
@@ -91,36 +120,35 @@ profileEditButton.addEventListener("click", () => {
     configSettings
   );
 });
-profileExitButton.addEventListener("click", () => {
-  closeModal(profileModal);
-});
 profileForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  closeModal(profileModal);
-  profileName.textContent = profilNameInput.value;
-  profileDesc.textContent = profileDescInput.value;
+  handleFormSubmit(evt, () => {
+    return api
+      .editUserInfo({
+        name: profilNameInput.value,
+        about: profileDescInput.value,
+      })
+      .then((data) => {
+        profileName.textContent = data.name;
+        profileDesc.textContent = data.about;
+        closeModal(profileModal);
+      });
+  });
 });
 
 // add card events
 addCardOpenButton.addEventListener("click", () => {
   openModal(addCardModal);
 });
-addCardExitButton.addEventListener("click", () => {
-  closeModal(addCardModal);
-});
 addCardForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  closeModal(addCardModal);
-  cardList.prepend(
-    getCardElement({ link: addCardFormLink.value, name: addCardFormName.value })
-  );
-  evt.target.reset();
-  disableButton(addCardSubmitButton, configSettings);
-});
-
-// preivew events
-previewExitButton.addEventListener("click", () => {
-  closeModal(previewModal);
+  handleFormSubmit(evt, () => {
+    return api
+      .addCard({ link: addCardFormLink.value, name: addCardFormName.value })
+      .then((res) => {
+        closeModal(addCardModal);
+        cardList.prepend(getCardElement(res));
+        disableButton(addCardSubmitButton, configSettings);
+      });
+  });
 });
 
 function openModal(modal) {
@@ -145,15 +173,26 @@ function getCardElement(cardData) {
   cardImage.alt = cardData.name;
 
   // Setup buttons
-  cardElement // like button
-    .querySelector(".card__like-button")
+  const likeButton = cardElement.querySelector(".card__like-button");
+  if (cardData.isLiked) likeButton.classList.add("card__like-button_liked");
+  likeButton // like button
     .addEventListener("click", (evt) => {
-      evt.currentTarget.classList.toggle("card__like-button_liked");
+      api
+        .changeLike(
+          likeButton.classList.contains("card__like-button_liked"),
+          cardData._id
+        )
+        .then(() => {
+          likeButton.classList.toggle("card__like-button_liked");
+        })
+        .catch(console.error);
     });
   cardElement // delete button
     .querySelector(".card__delete-button")
     .addEventListener("click", (evt) => {
-      cardElement.remove();
+      openModal(deleteModal);
+      selectedCard = cardElement;
+      selectedCardId = cardData._id;
     });
   cardImage // preivew image
     .addEventListener("click", (evt) => {
@@ -180,5 +219,24 @@ const modalEscapeListener = (evt) => {
     closeModal(document.querySelector(".modal_opened"));
   }
 };
+
+function handleFormSubmit(
+  evt,
+  submitCallback,
+  defualtText = "Save",
+  loadingText = "Saving..."
+) {
+  evt.preventDefault();
+  const submitText = evt.submitter;
+  submitText.textContent = loadingText;
+  submitCallback()
+    .then(() => {
+      evt.target.reset();
+    })
+    .catch(console.error)
+    .finally(() => {
+      submitText.textContent = defualtText;
+    });
+}
 
 enableValidation(configSettings);
